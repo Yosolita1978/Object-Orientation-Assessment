@@ -63,6 +63,7 @@ Part 1: Discussion
 # Create your classes and class methods
 
 class Student(object):
+    """ This class creates a student object. The address it's not mandatory """
 
     def __init__(self, first_name, last_name, address=" "):
         self.first_name = first_name
@@ -70,27 +71,36 @@ class Student(object):
         self.address = address
 
 class Question(object):
+    """ This class creates a question object and evualuates it, according the correct answer"""
 
     def __init__(self, question, correct_answer):
         self.question = question
         self.correct_answer = correct_answer
 
     def ask_and_evaluate(self):
+        """ This method evualuates if the answer was correct (was True) or not (was False) """
         user_answer = raw_input(self.question)
         return user_answer == self.correct_answer
+
+        # if user_answer == True:
+        # something like this will work too, but the expression "user_answer == self.correct_answer" it's already True or False
             
 
 class Exam(object):
+    """ This class creates a Examn object. It adds questions to that objects and can administer the test returning the percentage of correct answers for a user"""
 
     def __init__(self, name):
         self.name = name
         self.questions = []
 
     def add_question(self, question, correct_answer):
+        """ This method add question to the list of questions """
+
         question = Question(question, correct_answer)
         self.questions.append(question)
 
     def administer(self):
+        """ This method evualuates how many correct answer have the user """
         score = 0
         for question in self.questions:
             if question.ask_and_evaluate():
@@ -102,7 +112,7 @@ class Exam(object):
         return percentage
 
 class Quiz(Exam):
-    """docstring for Quiz"""
+    """This class takes all the elements for the Exam. Only evaluates different if a quiz is passed or not."""
 
     def administer(self):
         percentage = super(Quiz, self).administer()
@@ -115,17 +125,27 @@ class Quiz(Exam):
 
 
 def take_test(exam, student):
+    """ This function make that a student given take a examen given """
+    
     student.score = exam.administer()
     print "The {} has a score of {}".format(student.first_name, student.score)
 
 def take_quiz(exam, student):
-    student.passed = exam.administer()
-    if student.passed:
+     """ This function make that a student given take a quiz given"""
+
+     student.passed = exam.administer()
+
+     if student.passed:
+
         print "The {} has passed the Quiz".format(student.first_name)
-    else:
+
+     else:
+
         print "The {} has failed the Quiz".format(student.first_name)
 
 def example_exam():
+    """ This function make a test and a student and run the objects in its classes """
+
     math_test = Exam("math")
     
     math_test.add_question("What is two plus two?", "4")
@@ -137,6 +157,8 @@ def example_exam():
     take_test(math_test, student_1)
 
 def example_quiz():
+    """ This function make a quiz and a student and run the objects in its classes """
+
     general_test = Quiz("General")
     
     general_test.add_question("The third planet from the sun is called:? ", "earth")
